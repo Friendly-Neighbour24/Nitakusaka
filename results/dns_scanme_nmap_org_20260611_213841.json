@@ -1,0 +1,18 @@
+{
+    "target": "scanme.nmap.org",
+    "timestamp": "2026-06-11T21:37:07.354939",
+    "zone_transfer": [],
+    "root_records": {
+        "A": [
+            "45.33.32.156"
+        ],
+        "AAAA": [
+            "2600:3c01::f03c:91ff:fe18:bb2f"
+        ],
+        "CNAME": [],
+        "MX": [],
+        "TXT": [],
+        "NS": []
+    },
+    "subdomains": []
+}
