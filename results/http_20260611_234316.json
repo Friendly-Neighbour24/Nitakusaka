@@ -1,0 +1,53 @@
+{
+    "timestamp": "2026-06-11T23:43:16.271011",
+    "total_hosts": 1,
+    "live_hosts": 1,
+    "results": [
+        {
+            "host": "scanme.nmap.org",
+            "url": "http://scanme.nmap.org/",
+            "status_code": 200,
+            "title": "Go ahead and ScanMe!",
+            "technologies": [
+                "Apache"
+            ],
+            "security_headers": {
+                "Content-Security-Policy": {
+                    "present": false,
+                    "value": null
+                },
+                "X-Frame-Options": {
+                    "present": false,
+                    "value": null
+                },
+                "X-Content-Type-Options": {
+                    "present": false,
+                    "value": null
+                },
+                "Strict-Transport-Security": {
+                    "present": false,
+                    "value": null
+                },
+                "X-XSS-Protection": {
+                    "present": false,
+                    "value": null
+                },
+                "Referrer-Policy": {
+                    "present": false,
+                    "value": null
+                },
+                "Permissions-Policy": {
+                    "present": false,
+                    "value": null
+                }
+            },
+            "interesting_paths": [],
+            "flags": [
+                "Missing security headers: Content-Security-Policy, X-Frame-Options, X-Content-Type-Options, Strict-Transport-Security, X-XSS-Protection, Referrer-Policy, Permissions-Policy",
+                "Live host"
+            ],
+            "server": "Apache/2.4.7 (Ubuntu)",
+            "content_length": 6974
+        }
+    ]
+}
