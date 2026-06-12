@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nitakusaka Report — {{ report.target }}</title>
+<style>
+  :root {
+    --bg:        #0E1428;
+    --bg-deep:   #0A0F20;
+    --bg-card:   #161E3A;
+    --bg-elev:   #1C2647;
+    --border:    #2A3866;
+    --border-lit:#3D4F8A;
+    --text:      #E4E9F7;
+    --text-dim:  #8B97BE;
+    --text-faint:#5A6699;
+
+    --cyan:      #2DE2E6;
+    --violet:    #8B5CF6;
+    --coral:     #FF5C7C;
+    --gold:      #FFC542;
+    --mint:      #3DF5A0;
+
+    --critical:  #FF4365;
+    --high:      #FF8A3D;
+    --medium:    #FFC542;
+    --low:       #2DE2E6;
+    --info:      #8B5CF6;
+
+    --grad-hero: linear-gradient(120deg, #2DE2E6 0%, #8B5CF6 60%, #FF5C7C 100%);
+    --grad-cyan: linear-gradient(135deg, #2DE2E6, #4F8BFF);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(139,92,246,0.18), transparent 60%),
+      radial-gradient(900px 500px at 0% 0%, rgba(45,226,230,0.12), transparent 55%),
+      var(--bg);
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.6;
+  }
+
+  .mono { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+
+  /* ── Header ── */
+  .header {
+    position: relative;
+    padding: 56px 40px 40px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(90deg, transparent, transparent 38px, rgba(61,79,138,0.08) 39px, transparent 40px),
+      repeating-linear-gradient(0deg, transparent, transparent 38px, rgba(61,79,138,0.08) 39px, transparent 40px);
+    pointer-events: none;
+  }
+
+  .header-tag {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 18px;
+    position: relative;
+  }
+
+  .pulse {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--mint);
+    box-shadow: 0 0 0 0 rgba(61,245,160,0.6);
+    animation: pulse 2.4s infinite;
+  }
+
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(61,245,160,0.5); }
+    70%  { box-shadow: 0 0 0 10px rgba(61,245,160,0); }
+    100% { box-shadow: 0 0 0 0 rgba(61,245,160,0); }
+  }
+
+  .header-tag span {
+    color: var(--mint); font-size: 11px; letter-spacing: 3.5px;
+    text-transform: uppercase; font-family: 'JetBrains Mono', monospace;
+  }
+
+  .header h1 {
+    font-size: 54px; font-weight: 800; letter-spacing: -1.5px;
+    line-height: 1; margin-bottom: 14px; position: relative;
+    background: var(--grad-hero);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: fit-content;
+  }
+
+  .header .target {
+    display: inline-block; position: relative;
+    font-size: 16px; color: var(--cyan);
+    font-family: 'JetBrains Mono', monospace;
+    padding: 6px 14px; margin-bottom: 24px;
+    border: 1px solid var(--border-lit); border-radius: 8px;
+    background: rgba(45,226,230,0.06);
+  }
+
+  .header-meta {
+    display: flex; gap: 28px; flex-wrap: wrap; position: relative;
+  }
+  .header-meta div { font-size: 12px; color: var(--text-dim); }
+  .header-meta strong { color: var(--text); font-weight: 600; }
+
+  /* ── Container ── */
+  .container { max-width: 1120px; margin: 0 auto; padding: 44px 40px; }
+  .section { margin-bottom: 52px; }
+
+  .section-title {
+    font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 22px;
+    font-family: 'JetBrains Mono', monospace;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .section-title::before {
+    content: ""; width: 22px; height: 2px; border-radius: 2px;
+    background: var(--grad-cyan);
+  }
+  .section-title::after {
+    content: ""; flex: 1; height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* ── Severity cards ── */
+  .severity-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px;
+  }
+
+  .sev-card {
+    position: relative; border-radius: 14px; padding: 24px 16px;
+    text-align: center; overflow: hidden;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .sev-card:hover { transform: translateY(-3px); border-color: var(--border-lit); }
+
+  .sev-card::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .sev-card::after {
+    content: ""; position: absolute; top: -40px; left: 50%; transform: translateX(-50%);
+    width: 90px; height: 90px; border-radius: 50%; opacity: 0.18; filter: blur(26px);
+  }
+  .sev-card.critical::before { background: var(--critical); }
+  .sev-card.high::before     { background: var(--high); }
+  .sev-card.medium::before   { background: var(--medium); }
+  .sev-card.low::before      { background: var(--low); }
+  .sev-card.info::before     { background: var(--info); }
+  .sev-card.critical::after { background: var(--critical); }
+  .sev-card.high::after     { background: var(--high); }
+  .sev-card.medium::after   { background: var(--medium); }
+  .sev-card.low::after      { background: var(--low); }
+  .sev-card.info::after     { background: var(--info); }
+
+  .sev-count {
+    font-size: 40px; font-weight: 800; font-family: 'JetBrains Mono', monospace;
+    line-height: 1; margin-bottom: 10px; position: relative;
+  }
+  .sev-card.critical .sev-count { color: var(--critical); }
+  .sev-card.high .sev-count     { color: var(--high); }
+  .sev-card.medium .sev-count   { color: var(--medium); }
+  .sev-card.low .sev-count      { color: var(--low); }
+  .sev-card.info .sev-count     { color: var(--info); }
+
+  .sev-label {
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-dim); position: relative;
+  }
+
+  /* ── Stats row ── */
+  .stats-row {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px;
+  }
+  .stat-box {
+    position: relative; border-radius: 14px; padding: 22px 24px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .stat-box::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: var(--grad-cyan);
+  }
+  .stat-box .num {
+    font-size: 30px; font-weight: 800; font-family: 'JetBrains Mono', monospace;
+    background: var(--grad-cyan); -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; width: fit-content;
+  }
+  .stat-box .lbl { font-size: 12px; color: var(--text-dim); margin-top: 6px; }
+
+  /* ── Findings ── */
+  .finding {
+    border-radius: 14px; margin-bottom: 16px; overflow: hidden;
+    background: var(--bg-card); border: 1px solid var(--border);
+    transition: border-color 0.2s ease;
+  }
+  .finding:hover { border-color: var(--border-lit); }
+
+  .finding-head {
+    display: flex; align-items: center; gap: 14px; padding: 18px 22px;
+    border-left: 4px solid var(--border); position: relative;
+  }
+  .finding.critical .finding-head { border-left-color: var(--critical); }
+  .finding.high .finding-head     { border-left-color: var(--high); }
+  .finding.medium .finding-head   { border-left-color: var(--medium); }
+  .finding.low .finding-head      { border-left-color: var(--low); }
+  .finding.info .finding-head     { border-left-color: var(--info); }
+
+  .sev-badge {
+    font-size: 10px; font-weight: 700; letter-spacing: 1px; padding: 5px 11px;
+    border-radius: 6px; text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace; white-space: nowrap;
+  }
+  .finding.critical .sev-badge { background: rgba(255,67,101,0.16);  color: var(--critical); }
+  .finding.high .sev-badge     { background: rgba(255,138,61,0.16);  color: var(--high); }
+  .finding.medium .sev-badge   { background: rgba(255,197,66,0.16);  color: var(--medium); }
+  .finding.low .sev-badge      { background: rgba(45,226,230,0.16);  color: var(--low); }
+  .finding.info .sev-badge     { background: rgba(139,92,246,0.18);  color: var(--info); }
+
+  .finding-title { font-size: 15px; font-weight: 600; color: #FFFFFF; }
+  .finding-body { padding: 0 22px 20px 26px; }
+  .finding-detail { font-size: 13px; color: var(--text); margin-bottom: 14px; }
+
+  .finding-field { font-size: 12px; margin-top: 8px; display: flex; gap: 10px; }
+  .finding-field .key {
+    color: var(--text-faint); text-transform: uppercase; letter-spacing: 1px; min-width: 110px;
+  }
+  .finding-field .val { color: var(--text); font-family: 'JetBrains Mono', monospace; word-break: break-all; }
+  .finding-field .val.cve { color: var(--high); }
+  .finding-field .val.fix { color: var(--mint); font-family: 'Inter', sans-serif; }
+
+  /* ── Tables ── */
+  table {
+    width: 100%; border-collapse: collapse; border-radius: 14px; overflow: hidden;
+    background: var(--bg-card); border: 1px solid var(--border);
+  }
+  th {
+    text-align: left; padding: 13px 20px; font-size: 11px; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--cyan);
+    background: var(--bg-elev); border-bottom: 1px solid var(--border); font-weight: 600;
+  }
+  td { padding: 12px 20px; font-size: 13px; border-bottom: 1px solid var(--border); color: var(--text); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(45,226,230,0.04); }
+  td.mono { font-family: 'JetBrains Mono', monospace; }
+  .risk-flag { color: var(--critical); font-size: 12px; }
+
+  /* ── Tech chips ── */
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip {
+    border-radius: 8px; padding: 7px 15px; font-size: 12px; color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(139,92,246,0.10); border: 1px solid var(--border-lit);
+    transition: transform 0.15s ease;
+  }
+  .chip:hover { transform: translateY(-2px); }
+
+  /* ── Empty state ── */
+  .empty {
+    color: var(--text-faint); font-size: 13px; font-style: italic;
+    padding: 24px; text-align: center; border-radius: 14px;
+    background: var(--bg-card); border: 1px dashed var(--border);
+  }
+
+  /* ── Footer ── */
+  .footer {
+    border-top: 1px solid var(--border); padding: 30px 40px; text-align: center;
+    color: var(--text-faint); font-size: 12px;
+  }
+  .footer .brand {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700;
+    background: var(--grad-hero); -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pulse { animation: none; }
+    .sev-card, .chip, .finding { transition: none; }
+  }
+
+  @media (max-width: 700px) {
+    .severity-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-row { grid-template-columns: 1fr; }
+    .header h1 { font-size: 38px; }
+    .container { padding: 28px 22px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-tag">
+      <div class="pulse"></div>
+      <span>Reconnaissance Report</span>
+    </div>
+    <h1>Nitakusaka</h1>
+    <div class="target mono">{{ report.target }}</div>
+    <div class="header-meta">
+      <div>Generated <strong>{{ report.generated }}</strong></div>
+      <div>Engine <strong>v{{ report.version }}</strong></div>
+      <div>Findings <strong>{{ report.total_findings }}</strong></div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="section">
+      <div class="section-title">Executive Summary</div>
+      <div class="severity-grid">
+        <div class="sev-card critical">
+          <div class="sev-count">{{ report.severity_counts.CRITICAL }}</div>
+          <div class="sev-label">Critical</div>
+        </div>
+        <div class="sev-card high">
+          <div class="sev-count">{{ report.severity_counts.HIGH }}</div>
+          <div class="sev-label">High</div>
+        </div>
+        <div class="sev-card medium">
+          <div class="sev-count">{{ report.severity_counts.MEDIUM }}</div>
+          <div class="sev-label">Medium</div>
+        </div>
+        <div class="sev-card low">
+          <div class="sev-count">{{ report.severity_counts.LOW }}</div>
+          <div class="sev-label">Low</div>
+        </div>
+        <div class="sev-card info">
+          <div class="sev-count">{{ report.severity_counts.INFO }}</div>
+          <div class="sev-label">Info</div>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="num">{{ report.total_subdomains }}</div>
+          <div class="lbl">Subdomains discovered</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">{{ report.total_ports }}</div>
+          <div class="lbl">Open ports found</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">{{ report.technologies | length }}</div>
+          <div class="lbl">Technologies detected</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Findings</div>
+      {% if report.findings %}
+        {% for finding in report.findings %}
+        <div class="finding {{ finding.severity | lower }}">
+          <div class="finding-head">
+            <span class="sev-badge">{{ finding.severity }}</span>
+            <span class="finding-title">{{ finding.title }}</span>
+          </div>
+          <div class="finding-body">
+            {% if finding.detail %}
+            <div class="finding-detail">{{ finding.detail }}</div>
+            {% endif %}
+            {% if finding.url %}
+            <div class="finding-field">
+              <span class="key">Location</span>
+              <span class="val">{{ finding.url }}</span>
+            </div>
+            {% endif %}
+            {% if finding.cve %}
+            <div class="finding-field">
+              <span class="key">CVE</span>
+              <span class="val cve">
+                {% if finding.cve is string %}{{ finding.cve }}{% else %}{{ finding.cve | join(', ') }}{% endif %}
+              </span>
+            </div>
+            {% endif %}
+            {% if finding.recommendation %}
+            <div class="finding-field">
+              <span class="key">Remediation</span>
+              <span class="val fix">{{ finding.recommendation }}</span>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="empty">No findings identified in this scan.</div>
+      {% endif %}
+    </div>
+
+    <div class="section">
+      <div class="section-title">Discovered Subdomains</div>
+      {% if report.subdomains %}
+      <table>
+        <thead><tr><th>Subdomain</th><th>IP Addresses</th><th>Source</th></tr></thead>
+        <tbody>
+          {% for sub in report.subdomains %}
+          <tr>
+            <td class="mono">{{ sub.subdomain }}</td>
+            <td class="mono">{{ sub.ips or '—' }}</td>
+            <td>{{ sub.status }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+        <div class="empty">No subdomains discovered.</div>
+      {% endif %}
+    </div>
+
+    <div class="section">
+      <div class="section-title">Open Ports &amp; Services</div>
+      {% if report.open_ports %}
+      <table>
+        <thead><tr><th>Port</th><th>Service</th><th>Risk Assessment</th></tr></thead>
+        <tbody>
+          {% for port in report.open_ports %}
+          <tr>
+            <td class="mono">{{ port.port }}</td>
+            <td>{{ port.service }}</td>
+            <td>{% if port.risk %}<span class="risk-flag">⚠ {{ port.risk }}</span>{% else %}—{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+        <div class="empty">No open ports found.</div>
+      {% endif %}
+    </div>
+
+    <div class="section">
+      <div class="section-title">Detected Technologies</div>
+      {% if report.technologies %}
+      <div class="chips">
+        {% for tech in report.technologies %}
+        <span class="chip">{{ tech }}</span>
+        {% endfor %}
+      </div>
+      {% else %}
+        <div class="empty">No technologies fingerprinted.</div>
+      {% endif %}
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Generated by <span class="brand">Nitakusaka</span> — automated offensive reconnaissance framework
+  </div>
+
+</body>
+</html>

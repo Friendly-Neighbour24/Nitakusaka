@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nitakusaka Report — scanme.nmap.org</title>
+<style>
+  :root {
+    --bg:        #0A0E1A;
+    --bg-card:   #0D1120;
+    --bg-elev:   #11162A;
+    --border:    #1E2740;
+    --text:      #C9D1E0;
+    --text-dim:  #5A6580;
+    --text-faint:#3A4560;
+    --accent:    #00FF88;
+    --critical:  #FF3366;
+    --high:      #FF6B35;
+    --medium:    #FFB800;
+    --low:       #00C8FF;
+    --info:      #7A8AAA;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    padding: 0;
+  }
+
+  .mono {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  }
+
+  /* ── Header ── */
+  .header {
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, #080C18 0%, var(--bg) 100%);
+    padding: 48px 40px 36px;
+  }
+
+  .header-tag {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .pulse {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .header-tag span {
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .header h1 {
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: #FFFFFF;
+    margin-bottom: 6px;
+  }
+
+  .header .target {
+    font-size: 18px;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 20px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .header-meta div {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .header-meta strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ── Container ── */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px;
+  }
+
+  .section {
+    margin-bottom: 48px;
+  }
+
+  .section-title {
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── Severity cards ── */
+  .severity-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+
+  .sev-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sev-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .sev-card.critical::before { background: var(--critical); }
+  .sev-card.high::before     { background: var(--high); }
+  .sev-card.medium::before   { background: var(--medium); }
+  .sev-card.low::before      { background: var(--low); }
+  .sev-card.info::before     { background: var(--info); }
+
+  .sev-count {
+    font-size: 36px;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .sev-card.critical .sev-count { color: var(--critical); }
+  .sev-card.high .sev-count     { color: var(--high); }
+  .sev-card.medium .sev-count   { color: var(--medium); }
+  .sev-card.low .sev-count      { color: var(--low); }
+  .sev-card.info .sev-count     { color: var(--info); }
+
+  .sev-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* ── Stats row ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .stat-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+  }
+
+  .stat-box .num {
+    font-size: 28px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text);
+  }
+
+  .stat-box .lbl {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  /* ── Findings ── */
+  .finding {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+
+  .finding-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    border-left: 3px solid var(--border);
+  }
+
+  .finding.critical .finding-head { border-left-color: var(--critical); }
+  .finding.high .finding-head     { border-left-color: var(--high); }
+  .finding.medium .finding-head   { border-left-color: var(--medium); }
+  .finding.low .finding-head      { border-left-color: var(--low); }
+  .finding.info .finding-head     { border-left-color: var(--info); }
+
+  .sev-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+  }
+
+  .finding.critical .sev-badge { background: rgba(255,51,102,0.15);  color: var(--critical); }
+  .finding.high .sev-badge     { background: rgba(255,107,53,0.15);  color: var(--high); }
+  .finding.medium .sev-badge   { background: rgba(255,184,0,0.15);   color: var(--medium); }
+  .finding.low .sev-badge      { background: rgba(0,200,255,0.15);   color: var(--low); }
+  .finding.info .sev-badge     { background: rgba(122,138,170,0.15); color: var(--info); }
+
+  .finding-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #FFFFFF;
+  }
+
+  .finding-body {
+    padding: 0 20px 18px 23px;
+  }
+
+  .finding-detail {
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .finding-field {
+    font-size: 12px;
+    margin-top: 6px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .finding-field .key {
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    min-width: 110px;
+  }
+
+  .finding-field .val {
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    word-break: break-all;
+  }
+
+  .finding-field .val.cve {
+    color: var(--high);
+  }
+
+  .finding-field .val.fix {
+    color: var(--accent);
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* ── Tables ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  th {
+    text-align: left;
+    padding: 12px 18px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    background: var(--bg-elev);
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+  }
+
+  td {
+    padding: 11px 18px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  td.mono {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text);
+  }
+
+  .risk-flag {
+    color: var(--critical);
+    font-size: 12px;
+  }
+
+  /* ── Tech chips ── */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── Empty state ── */
+  .empty {
+    color: var(--text-faint);
+    font-size: 13px;
+    font-style: italic;
+    padding: 20px;
+    text-align: center;
+    background: var(--bg-card);
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 40px;
+    text-align: center;
+    color: var(--text-faint);
+    font-size: 12px;
+  }
+
+  .footer .brand {
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+  }
+
+  @media (max-width: 700px) {
+    .severity-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-row { grid-template-columns: 1fr; }
+    .header h1 { font-size: 32px; }
+    .container { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-tag">
+      <div class="pulse"></div>
+      <span>Reconnaissance Report</span>
+    </div>
+    <h1>Nitakusaka</h1>
+    <div class="target mono">scanme.nmap.org</div>
+    <div class="header-meta">
+      <div>Generated <strong>2026-06-12 19:33:09</strong></div>
+      <div>Engine <strong>v1.0</strong></div>
+      <div>Findings <strong>1</strong></div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- Executive Summary -->
+    <div class="section">
+      <div class="section-title">Executive Summary</div>
+      <div class="severity-grid">
+        <div class="sev-card critical">
+          <div class="sev-count">0</div>
+          <div class="sev-label">Critical</div>
+        </div>
+        <div class="sev-card high">
+          <div class="sev-count">0</div>
+          <div class="sev-label">High</div>
+        </div>
+        <div class="sev-card medium">
+          <div class="sev-count">1</div>
+          <div class="sev-label">Medium</div>
+        </div>
+        <div class="sev-card low">
+          <div class="sev-count">0</div>
+          <div class="sev-label">Low</div>
+        </div>
+        <div class="sev-card info">
+          <div class="sev-count">0</div>
+          <div class="sev-label">Info</div>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="num">0</div>
+          <div class="lbl">Subdomains discovered</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">2</div>
+          <div class="lbl">Open ports found</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">1</div>
+          <div class="lbl">Technologies detected</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Findings -->
+    <div class="section">
+      <div class="section-title">Findings</div>
+      
+        
+        <div class="finding medium">
+          <div class="finding-head">
+            <span class="sev-badge">MEDIUM</span>
+            <span class="finding-title">Missing Security Headers on http://scanme.nmap.org/</span>
+          </div>
+          <div class="finding-body">
+            
+            <div class="finding-detail">7 security headers not configured</div>
+            
+            
+            
+            
+            <div class="finding-field">
+              <span class="key">Remediation</span>
+              <span class="val fix">Implement missing security headers in the web server configuration.</span>
+            </div>
+            
+          </div>
+        </div>
+        
+      
+    </div>
+
+    <!-- Subdomains -->
+    <div class="section">
+      <div class="section-title">Discovered Subdomains</div>
+      
+        <div class="empty">No subdomains discovered.</div>
+      
+    </div>
+
+    <!-- Open Ports -->
+    <div class="section">
+      <div class="section-title">Open Ports &amp; Services</div>
+      
+      <table>
+        <thead>
+          <tr><th>Port</th><th>Service</th><th>Risk Assessment</th></tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td class="mono">22</td>
+            <td>SSH</td>
+            <td>—</td>
+          </tr>
+          
+          <tr>
+            <td class="mono">80</td>
+            <td>HTTP</td>
+            <td>—</td>
+          </tr>
+          
+        </tbody>
+      </table>
+      
+    </div>
+
+    <!-- Technologies -->
+    <div class="section">
+      <div class="section-title">Detected Technologies</div>
+      
+      <div class="chips">
+        
+        <span class="chip">Apache</span>
+        
+      </div>
+      
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Generated by <span class="brand">Nitakusaka</span> — automated offensive reconnaissance framework
+  </div>
+
+</body>
+</html>
