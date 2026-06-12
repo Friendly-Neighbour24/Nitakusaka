@@ -26,7 +26,7 @@ python nitakusaka.py --target example.com --full
 
 Most recon tools hand you a list of findings and stop there. Nitakusaka goes further:
 
-**Contextual AI wordlists** — instead of blasting the same generic wordlist every tool uses, Nitakusaka can generate target-specific subdomain guesses based on the company's industry and region using AI. Against a Tanzanian bank it generates guesses like `wakala`, `benki`, and `mpesa-gateway` that no generic wordlist contains.
+**Contextual wordlists** — instead of blasting the same generic wordlist every tool uses, Nitakusaka generates target-specific subdomain guesses based on the company's industry and region. A built-in local engine works out of the box with no API key, producing region-aware terms like `wakala`, `benki`, and `mpesa-gateway` against a Tanzanian bank. When an Anthropic API key is provided, it layers AI-generated guesses on top for even deeper coverage..
 
 **Automatic correlation** — findings from every module are cross-referenced against known vulnerability patterns automatically. An open database port combined with a sensitive subdomain gets flagged as a compound finding a single scanner would miss.
 
