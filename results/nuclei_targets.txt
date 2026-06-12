@@ -1,0 +1,2 @@
+http://scanme.nmap.org
+https://scanme.nmap.org

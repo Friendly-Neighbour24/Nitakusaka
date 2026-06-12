@@ -1,0 +1,11 @@
+{
+    "domain": "scanme.nmap.org",
+    "timestamp": "2026-06-12T11:57:15.009219",
+    "amass": [],
+    "nuclei": [],
+    "total_findings": 0,
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+}
