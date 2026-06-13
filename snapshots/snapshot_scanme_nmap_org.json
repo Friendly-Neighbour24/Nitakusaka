@@ -1,0 +1,8 @@
+{
+    "target": "scanme.nmap.org",
+    "timestamp": "2026-06-13T13:36:49.709737",
+    "subdomains": [],
+    "open_ports": [
+        22
+    ]
+}

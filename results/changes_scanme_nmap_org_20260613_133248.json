@@ -1,0 +1,13 @@
+{
+    "target": "scanme.nmap.org",
+    "timestamp": "2026-06-13T13:32:48.446167",
+    "changes": {
+        "new_subdomains": [],
+        "removed_subdomains": [
+            "fakeold.scanme.nmap.org"
+        ],
+        "new_ports": [],
+        "closed_ports": [],
+        "has_changes": true
+    }
+}

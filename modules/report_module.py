@@ -44,6 +44,7 @@ def load_latest_results(results_dir=RESULTS_DIR):
         "http":       None,
         "correlator": None,
         "vuln":       None,
+        "reverse":    None,
     }
 
     # Map of module prefix to data key
@@ -53,6 +54,7 @@ def load_latest_results(results_dir=RESULTS_DIR):
         "http_":       "http",
         "correlator_": "correlator",
         "vuln_":       "vuln",
+        "reverse_":    "reverse",
     }
 
     for prefix, key in module_files.items():
@@ -122,6 +124,7 @@ def build_report_data(data):
         "subdomains":    [],
         "open_ports":    [],
         "technologies":  set(),
+        "reverse_hosts": [],
         "severity_counts": {
             "CRITICAL": 0, "HIGH": 0, "MEDIUM": 0,
             "LOW": 0, "INFO": 0
@@ -187,6 +190,18 @@ def build_report_data(data):
 
     # Convert set to sorted list for template
     report["technologies"] = sorted(list(report["technologies"]))
+
+    # Collect reverse DNS hosts
+    if data.get("reverse"):
+        for host in data["reverse"].get("hostnames", []):
+            hostname = host.get("hostname", "")
+            parts = hostname.split(".")
+            root = ".".join(parts[-2:]) if len(parts) >= 2 else hostname
+            report["reverse_hosts"].append({
+                "ip":       host.get("ip", ""),
+                "hostname": hostname,
+                "root":     root,
+            })
 
     # Summary stats
     report["total_findings"]   = len(report["findings"])
@@ -391,3 +406,28 @@ def run(formats=None, output_dir=RESULTS_DIR, **specific_files):
     print(f"{'='*60}\n")
 
     return outputs
+
+
+# ----------------------------------------------
+#  CHANGE REPORT GENERATOR (for monitor module)
+# ----------------------------------------------
+
+def generate_change_report(changes, target, output_dir=RESULTS_DIR):
+    """Generate an HTML change report from monitor output."""
+    print("\n[*] Generating HTML change report...")
+    env = Environment(loader=FileSystemLoader(TEMPLATES_DIR))
+    try:
+        template = env.get_template("changes.html.j2")
+    except Exception as e:
+        print("[!] Could not load change template:", e)
+        return None
+    generated = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    html = template.render(target=target, generated=generated, changes=changes)
+    safe_target = target.replace(".", "_")
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    output_path = os.path.join(output_dir, "changes_" + safe_target + "_" + timestamp + ".html")
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(html)
+    print("    [+] Change report saved to", output_path)
+    return output_path
+

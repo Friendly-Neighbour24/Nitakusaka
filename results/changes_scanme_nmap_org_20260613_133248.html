@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nitakusaka Change Report — scanme.nmap.org</title>
+<style>
+  :root {
+    --bg:#0E1428; --bg-card:#161E3A; --bg-elev:#1C2647; --border:#2A3866;
+    --border-lit:#3D4F8A; --text:#E4E9F7; --text-dim:#8B97BE; --text-faint:#5A6699;
+    --cyan:#2DE2E6; --violet:#8B5CF6; --add:#3DF5A0; --remove:#FF4365; --gold:#FFC542;
+    --grad-hero:linear-gradient(120deg,#2DE2E6 0%,#8B5CF6 60%,#FF5C7C 100%);
+    --grad-cyan:linear-gradient(135deg,#2DE2E6,#4F8BFF);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:radial-gradient(1200px 600px at 80% -10%,rgba(139,92,246,0.18),transparent 60%),
+               radial-gradient(900px 500px at 0% 0%,rgba(45,226,230,0.12),transparent 55%),var(--bg);
+    background-attachment:fixed;color:var(--text);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6;
+  }
+  .mono{font-family:'JetBrains Mono','Fira Code',monospace;}
+  .header{position:relative;padding:52px 40px 36px;border-bottom:1px solid var(--border);overflow:hidden;}
+  .header::before{content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(90deg,transparent,transparent 38px,rgba(61,79,138,0.08) 39px,transparent 40px),
+               repeating-linear-gradient(0deg,transparent,transparent 38px,rgba(61,79,138,0.08) 39px,transparent 40px);
+    pointer-events:none;}
+  .header-tag{display:flex;align-items:center;gap:10px;margin-bottom:16px;position:relative;}
+  .pulse{width:8px;height:8px;border-radius:50%;background:var(--gold);
+    box-shadow:0 0 0 0 rgba(255,197,66,0.6);animation:pulse 2.4s infinite;}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,197,66,0.5);}70%{box-shadow:0 0 0 10px rgba(255,197,66,0);}100%{box-shadow:0 0 0 0 rgba(255,197,66,0);}}
+  .header-tag span{color:var(--gold);font-size:11px;letter-spacing:3.5px;text-transform:uppercase;font-family:'JetBrains Mono',monospace;}
+  .header h1{font-size:46px;font-weight:800;letter-spacing:-1.5px;line-height:1;margin-bottom:12px;
+    background:var(--grad-hero);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;width:fit-content;position:relative;}
+  .header .target{display:inline-block;position:relative;font-size:16px;color:var(--cyan);
+    font-family:'JetBrains Mono',monospace;padding:6px 14px;margin-bottom:20px;
+    border:1px solid var(--border-lit);border-radius:8px;background:rgba(45,226,230,0.06);}
+  .header-meta{display:flex;gap:28px;flex-wrap:wrap;position:relative;}
+  .header-meta div{font-size:12px;color:var(--text-dim);}
+  .header-meta strong{color:var(--text);font-weight:600;}
+  .container{max-width:1000px;margin:0 auto;padding:44px 40px;}
+  .section{margin-bottom:40px;}
+  .section-title{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--text-dim);
+    margin-bottom:20px;font-family:'JetBrains Mono',monospace;display:flex;align-items:center;gap:14px;}
+  .section-title::before{content:"";width:22px;height:2px;border-radius:2px;background:var(--grad-cyan);}
+  .section-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
+  .nochange{padding:40px;text-align:center;border-radius:14px;background:var(--bg-card);
+    border:1px solid var(--border);color:var(--text-dim);}
+  .nochange .big{font-size:18px;color:var(--add);margin-bottom:6px;font-weight:600;}
+  .change-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .change-col{border-radius:14px;background:var(--bg-card);border:1px solid var(--border);overflow:hidden;}
+  .change-col h3{font-size:13px;padding:14px 18px;border-bottom:1px solid var(--border);
+    display:flex;align-items:center;gap:8px;font-weight:600;}
+  .change-col.add h3{color:var(--add);background:rgba(61,245,160,0.06);}
+  .change-col.remove h3{color:var(--remove);background:rgba(255,67,101,0.06);}
+  .change-item{padding:10px 18px;font-family:'JetBrains Mono',monospace;font-size:13px;
+    border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+  .change-item:last-child{border-bottom:none;}
+  .change-item.add{color:var(--text);}
+  .change-item.add::before{content:"+";color:var(--add);font-weight:700;}
+  .change-item.remove{color:var(--text-dim);}
+  .change-item.remove::before{content:"−";color:var(--remove);font-weight:700;}
+  .change-empty{padding:18px;color:var(--text-faint);font-size:12px;font-style:italic;text-align:center;}
+  .footer{border-top:1px solid var(--border);padding:28px 40px;text-align:center;color:var(--text-faint);font-size:12px;}
+  .footer .brand{font-family:'JetBrains Mono',monospace;font-weight:700;
+    background:var(--grad-hero);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  @media(max-width:700px){.change-grid{grid-template-columns:1fr;}.header h1{font-size:34px;}.container{padding:28px 22px;}}
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-tag"><div class="pulse"></div><span>Change Detection Report</span></div>
+    <h1>Nitakusaka</h1>
+    <div class="target mono">scanme.nmap.org</div>
+    <div class="header-meta">
+      <div>Generated <strong>2026-06-13 13:32:48</strong></div>
+      <div>Status <strong>Changes detected</strong></div>
+    </div>
+  </div>
+  <div class="container">
+    
+    <div class="section">
+      <div class="section-title">Subdomain Changes</div>
+      <div class="change-grid">
+        <div class="change-col add">
+          <h3>New Subdomains (0)</h3>
+          <div class="change-empty">None</div>
+        </div>
+        <div class="change-col remove">
+          <h3>Removed Subdomains (1)</h3>
+          <div class="change-item remove">fakeold.scanme.nmap.org</div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">Port Changes</div>
+      <div class="change-grid">
+        <div class="change-col add">
+          <h3>New Open Ports (0)</h3>
+          <div class="change-empty">None</div>
+        </div>
+        <div class="change-col remove">
+          <h3>Closed Ports (0)</h3>
+          <div class="change-empty">None</div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  <div class="footer">Generated by <span class="brand">Nitakusaka</span> — continuous attack surface monitoring</div>
+</body>
+</html>

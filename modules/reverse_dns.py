@@ -241,4 +241,13 @@ def run(target, threads=DEFAULT_THREADS, output_dir="results"):
     print(f"\n[*] Results saved to {output_path}")
     print(f"{'='*60}\n")
 
+    # Generate HTML report from this reverse scan
+    try:
+        from modules import report_module
+        report_data = report_module.build_report_data({"reverse": final_results})
+        report_data["target"] = target
+        report_module.generate_html_report(report_data, output_dir)
+    except Exception as e:
+        print("[!] Could not generate HTML report:", e)
+
     return final_results

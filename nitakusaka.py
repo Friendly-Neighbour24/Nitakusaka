@@ -15,6 +15,7 @@ from modules import http_module
 from modules import correlator
 from modules import report_module
 from modules import reverse_dns
+from modules import monitor
 
 # Optional modules — import safely
 try:
@@ -71,6 +72,23 @@ examples:
         help="reverse DNS scan an IP, CIDR block, or range "
              "(e.g. 196.216.10.0/24)",
     )
+    parser.add_argument(
+        "--watch",
+        action="store_true",
+        help="continuously monitor target for changes",
+    )
+    parser.add_argument(
+        "--interval",
+        type=int,
+        default=3600,
+        help="seconds between scans in watch mode (default: 3600)",
+    )
+    parser.add_argument(
+        "--monitor",
+        action="store_true",
+        help="run a single monitoring check against the last snapshot",
+    )
+    
     # Module selection
     parser.add_argument(
         "-m", "--module",
@@ -288,11 +306,41 @@ def main():
     parser = build_parser()
     args   = parser.parse_args()
 
-    # Reverse DNS runs standalone — handle it first
+   # Monitoring runs standalone too
+    if args.monitor or args.watch:
+        if not args.target:
+            print("[!] Monitoring requires --target")
+            sys.exit(1)
+        os.makedirs(args.output, exist_ok=True)
+        monitor.run(
+            args.target,
+            watch=args.watch,
+            interval=args.interval,
+            threads=args.threads,
+            output_dir=args.output,
+        )
+        sys.exit(0)
+
+        # Reverse DNS runs standalone — handle it first
     if args.reverse:
         os.makedirs(args.output, exist_ok=True)
         reverse_dns.run(args.reverse, threads=args.threads,
                         output_dir=args.output)
+        sys.exit(0)
+
+    # Monitoring runs standalone too
+    if args.monitor or args.watch:
+        if not args.target:
+            print("[!] Monitoring requires --target")
+            sys.exit(1)
+        os.makedirs(args.output, exist_ok=True)
+        monitor.run(
+            args.target,
+            watch=args.watch,
+            interval=args.interval,
+            threads=args.threads,
+            output_dir=args.output,
+        )
         sys.exit(0)
 
     # Validate: need a target unless just correlating/reporting
@@ -335,4 +383,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()        
+    main()
