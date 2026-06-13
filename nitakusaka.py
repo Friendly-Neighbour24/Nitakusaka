@@ -14,6 +14,7 @@ from modules import port_module
 from modules import http_module
 from modules import correlator
 from modules import report_module
+from modules import reverse_dns
 
 # Optional modules — import safely
 try:
@@ -65,7 +66,11 @@ examples:
         "-t", "--target",
         help="target domain (e.g. example.com)",
     )
-
+    parser.add_argument(
+        "-r", "--reverse",
+        help="reverse DNS scan an IP, CIDR block, or range "
+             "(e.g. 196.216.10.0/24)",
+    )
     # Module selection
     parser.add_argument(
         "-m", "--module",
@@ -283,10 +288,17 @@ def main():
     parser = build_parser()
     args   = parser.parse_args()
 
+    # Reverse DNS runs standalone — handle it first
+    if args.reverse:
+        os.makedirs(args.output, exist_ok=True)
+        reverse_dns.run(args.reverse, threads=args.threads,
+                        output_dir=args.output)
+        sys.exit(0)
+
     # Validate: need a target unless just correlating/reporting
     if not args.target and args.module not in ["correlate", "report"]:
         parser.print_help()
-        print("\n[!] Error: --target is required")
+        print("\n[!] Error: --target or --reverse is required")
         sys.exit(1)
 
     # Show what's available

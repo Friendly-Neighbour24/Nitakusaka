@@ -1,0 +1,22 @@
+{
+    "target": "45.33.32.156",
+    "timestamp": "2026-06-13T11:29:59.831928",
+    "ips_scanned": 1,
+    "ips_resolved": 1,
+    "distinct_domains": 1,
+    "hostnames": [
+        {
+            "ip": "45.33.32.156",
+            "hostname": "scanme.nmap.org",
+            "aliases": []
+        }
+    ],
+    "grouped_domains": {
+        "nmap.org": [
+            {
+                "ip": "45.33.32.156",
+                "hostname": "scanme.nmap.org"
+            }
+        ]
+    }
+}
