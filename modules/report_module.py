@@ -45,6 +45,7 @@ def load_latest_results(results_dir=RESULTS_DIR):
         "correlator": None,
         "vuln":       None,
         "reverse":    None,
+        "content":    None,
     }
 
     # Map of module prefix to data key
@@ -55,6 +56,7 @@ def load_latest_results(results_dir=RESULTS_DIR):
         "correlator_": "correlator",
         "vuln_":       "vuln",
         "reverse_":    "reverse",
+        "content_":    "content",
     }
 
     for prefix, key in module_files.items():
@@ -125,6 +127,7 @@ def build_report_data(data):
         "open_ports":    [],
         "technologies":  set(),
         "reverse_hosts": [],
+        "content_paths": [],
         "severity_counts": {
             "CRITICAL": 0, "HIGH": 0, "MEDIUM": 0,
             "LOW": 0, "INFO": 0
@@ -202,6 +205,16 @@ def build_report_data(data):
                 "hostname": hostname,
                 "root":     root,
             })
+
+    # Collect content discovery paths
+    if data.get("content"):
+        for item in data["content"].get("discovered", []):
+            report["content_paths"].append({
+                "url":         item.get("url", ""),
+                "path":        item.get("path", ""),
+                "status_code": item.get("status_code", ""),
+                "severity":    item.get("severity") or "",
+            })        
 
     # Summary stats
     report["total_findings"]   = len(report["findings"])

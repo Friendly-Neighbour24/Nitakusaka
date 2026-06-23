@@ -1,0 +1,24 @@
+{
+    "target": "ifm.ac.tz",
+    "ip": "102.223.9.103",
+    "timestamp": "2026-06-22T18:25:06.712492",
+    "mode": "top",
+    "ports_scanned": 39,
+    "open_ports": [
+        {
+            "port": 80,
+            "service": "HTTP",
+            "banner": "HTTP/1.1 302 Found\r\nDate: Mon, 22 Jun 2026 15:25:04 GMT\r\nServer: IFM\r\nX-Frame-Options: SAMEORIGIN\r\nLocation: https://ifm.ac.tz/\r\nConnection: close\r\nContent-Type: text/html; charset=iso-8859-1",
+            "risk": null,
+            "status": "open"
+        },
+        {
+            "port": 443,
+            "service": "HTTPS",
+            "banner": null,
+            "risk": null,
+            "status": "open"
+        }
+    ],
+    "risky_ports": []
+}

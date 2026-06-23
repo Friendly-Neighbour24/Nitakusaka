@@ -1,0 +1,64 @@
+{
+    "target": "ifm.ac.tz",
+    "timestamp": "2026-06-22T18:23:28.799520",
+    "zone_transfer": [],
+    "root_records": {
+        "A": [
+            "102.223.9.103"
+        ],
+        "AAAA": [],
+        "CNAME": [],
+        "MX": [
+            "20 mx4.eganet.go.tz.",
+            "10 mx4.eganet.go.tz."
+        ],
+        "TXT": [
+            "\"v=spf1 a:smtp2.eganet.go.tz a:smtp3.eganet.go.tz a:smtp.eganet.go.tz  a:smtp.gov.go.tz a:smtp4.eganet.go.tz a:smtp6.eganet.go.tz ~all\"",
+            "\"968bwdyxrpv241h88f17f8mxfrpp3tq7\"",
+            "\"_tu3bl8b2ohj4afr22hefqhic3xw08fm\"",
+            "\"google-site-verification=ynf4ZADLdhZzdpNaq6N0q0G4GEphs4cJHYJX_AjicCI\""
+        ],
+        "NS": [
+            "ns2.eganet.go.tz.",
+            "ns3.eganet.go.tz.",
+            "ns1.eganet.go.tz."
+        ]
+    },
+    "subdomains": [
+        {
+            "subdomain": "www.ifm.ac.tz",
+            "ips": [
+                "102.223.9.103"
+            ],
+            "status": "alive"
+        },
+        {
+            "subdomain": "admin.ifm.ac.tz",
+            "ips": [
+                "196.192.79.167"
+            ],
+            "status": "alive"
+        },
+        {
+            "subdomain": "ns1.ifm.ac.tz",
+            "ips": [
+                "41.59.91.54"
+            ],
+            "status": "alive"
+        },
+        {
+            "subdomain": "library.ifm.ac.tz",
+            "ips": [
+                "196.45.153.232"
+            ],
+            "status": "alive"
+        },
+        {
+            "subdomain": "mail.ifm.ac.tz",
+            "ips": [
+                "154.118.230.169"
+            ],
+            "status": "alive"
+        }
+    ]
+}

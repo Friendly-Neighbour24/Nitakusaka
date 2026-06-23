@@ -1,0 +1,456 @@
+{
+    "timestamp": "2026-06-22T18:25:17.376710",
+    "total_hosts": 6,
+    "live_hosts": 4,
+    "results": [
+        {
+            "host": "library.ifm.ac.tz",
+            "url": "https://library.ifm.ac.tz/",
+            "status_code": 200,
+            "title": "IFM Library",
+            "technologies": [
+                "Apache"
+            ],
+            "security_headers": {
+                "Content-Security-Policy": {
+                    "present": false,
+                    "value": null
+                },
+                "X-Frame-Options": {
+                    "present": false,
+                    "value": null
+                },
+                "X-Content-Type-Options": {
+                    "present": false,
+                    "value": null
+                },
+                "Strict-Transport-Security": {
+                    "present": false,
+                    "value": null
+                },
+                "X-XSS-Protection": {
+                    "present": false,
+                    "value": null
+                },
+                "Referrer-Policy": {
+                    "present": false,
+                    "value": null
+                },
+                "Permissions-Policy": {
+                    "present": false,
+                    "value": null
+                }
+            },
+            "interesting_paths": [
+                {
+                    "path": "/dashboard",
+                    "url": "https://library.ifm.ac.tz/dashboard",
+                    "status_code": 302,
+                    "size": 398,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/robots.txt",
+                    "url": "https://library.ifm.ac.tz/robots.txt",
+                    "status_code": 200,
+                    "size": 24,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/server-status",
+                    "url": "https://library.ifm.ac.tz/server-status",
+                    "status_code": 403,
+                    "size": 283,
+                    "severity": "INFO"
+                }
+            ],
+            "flags": [
+                "Missing security headers: Content-Security-Policy, X-Frame-Options, X-Content-Type-Options, Strict-Transport-Security, X-XSS-Protection, Referrer-Policy, Permissions-Policy",
+                "Live host"
+            ],
+            "server": "Apache/2.4.58 (Ubuntu)",
+            "content_length": 31417
+        },
+        {
+            "host": "mail.ifm.ac.tz",
+            "url": "https://mail.ifm.ac.tz/",
+            "status_code": 200,
+            "title": "IFM Mailing System :: Welcome to IFM Mailing System",
+            "technologies": [
+                "Apache",
+                "PHP",
+                "jQuery",
+                "Bootstrap"
+            ],
+            "security_headers": {
+                "Content-Security-Policy": {
+                    "present": false,
+                    "value": null
+                },
+                "X-Frame-Options": {
+                    "present": true,
+                    "value": "SAMEORIGIN, sameorigin"
+                },
+                "X-Content-Type-Options": {
+                    "present": true,
+                    "value": "nosniff"
+                },
+                "Strict-Transport-Security": {
+                    "present": false,
+                    "value": null
+                },
+                "X-XSS-Protection": {
+                    "present": true,
+                    "value": "1; mode=block"
+                },
+                "Referrer-Policy": {
+                    "present": false,
+                    "value": null
+                },
+                "Permissions-Policy": {
+                    "present": false,
+                    "value": null
+                }
+            },
+            "interesting_paths": [
+                {
+                    "path": "/admin",
+                    "url": "https://mail.ifm.ac.tz/admin",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "HIGH"
+                },
+                {
+                    "path": "/administrator",
+                    "url": "https://mail.ifm.ac.tz/administrator",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/login",
+                    "url": "https://mail.ifm.ac.tz/login",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/wp-admin",
+                    "url": "https://mail.ifm.ac.tz/wp-admin",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "HIGH"
+                },
+                {
+                    "path": "/phpmyadmin",
+                    "url": "https://mail.ifm.ac.tz/phpmyadmin",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "HIGH"
+                },
+                {
+                    "path": "/cpanel",
+                    "url": "https://mail.ifm.ac.tz/cpanel",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/dashboard",
+                    "url": "https://mail.ifm.ac.tz/dashboard",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/portal",
+                    "url": "https://mail.ifm.ac.tz/portal",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/api",
+                    "url": "https://mail.ifm.ac.tz/api",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/api/v1",
+                    "url": "https://mail.ifm.ac.tz/api/v1",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/api/v2",
+                    "url": "https://mail.ifm.ac.tz/api/v2",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/swagger",
+                    "url": "https://mail.ifm.ac.tz/swagger",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/.env",
+                    "url": "https://mail.ifm.ac.tz/.env",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "CRITICAL"
+                },
+                {
+                    "path": "/config.php",
+                    "url": "https://mail.ifm.ac.tz/config.php",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "CRITICAL"
+                },
+                {
+                    "path": "/backup",
+                    "url": "https://mail.ifm.ac.tz/backup",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/test",
+                    "url": "https://mail.ifm.ac.tz/test",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/dev",
+                    "url": "https://mail.ifm.ac.tz/dev",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/staging",
+                    "url": "https://mail.ifm.ac.tz/staging",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/.git/HEAD",
+                    "url": "https://mail.ifm.ac.tz/.git/HEAD",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "CRITICAL"
+                },
+                {
+                    "path": "/server-status",
+                    "url": "https://mail.ifm.ac.tz/server-status",
+                    "status_code": 403,
+                    "size": 279,
+                    "severity": "INFO"
+                }
+            ],
+            "flags": [
+                "Missing security headers: Content-Security-Policy, Strict-Transport-Security, Referrer-Policy, Permissions-Policy",
+                "Live host",
+                "CRITICAL: Sensitive paths exposed: ['/.env', '/config.php', '/.git/HEAD']"
+            ],
+            "server": "Apache/2.4.62 (Debian)",
+            "content_length": 16476
+        },
+        {
+            "host": "www.ifm.ac.tz",
+            "url": "https://www.ifm.ac.tz/",
+            "status_code": 200,
+            "title": "The Institute of Finance management",
+            "technologies": [],
+            "security_headers": {
+                "Content-Security-Policy": {
+                    "present": true,
+                    "value": "upgrade-insecure-requests"
+                },
+                "X-Frame-Options": {
+                    "present": true,
+                    "value": "SAMEORIGIN"
+                },
+                "X-Content-Type-Options": {
+                    "present": false,
+                    "value": null
+                },
+                "Strict-Transport-Security": {
+                    "present": true,
+                    "value": "max-age=31536000"
+                },
+                "X-XSS-Protection": {
+                    "present": true,
+                    "value": "1; mode=block"
+                },
+                "Referrer-Policy": {
+                    "present": true,
+                    "value": "same-origin"
+                },
+                "Permissions-Policy": {
+                    "present": true,
+                    "value": "geolocation=self"
+                }
+            },
+            "interesting_paths": [
+                {
+                    "path": "/login",
+                    "url": "https://www.ifm.ac.tz/login",
+                    "status_code": 200,
+                    "size": 101993,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/dashboard",
+                    "url": "https://www.ifm.ac.tz/dashboard",
+                    "status_code": 302,
+                    "size": 354,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/robots.txt",
+                    "url": "https://www.ifm.ac.tz/robots.txt",
+                    "status_code": 200,
+                    "size": 24,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/.env",
+                    "url": "https://www.ifm.ac.tz/.env",
+                    "status_code": 403,
+                    "size": 260,
+                    "severity": "CRITICAL"
+                },
+                {
+                    "path": "/.git/HEAD",
+                    "url": "https://www.ifm.ac.tz/.git/HEAD",
+                    "status_code": 403,
+                    "size": 260,
+                    "severity": "CRITICAL"
+                },
+                {
+                    "path": "/server-status",
+                    "url": "https://www.ifm.ac.tz/server-status",
+                    "status_code": 403,
+                    "size": 260,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/elmah.axd",
+                    "url": "https://www.ifm.ac.tz/elmah.axd",
+                    "status_code": 403,
+                    "size": 260,
+                    "severity": "INFO"
+                }
+            ],
+            "flags": [
+                "Missing security headers: X-Content-Type-Options",
+                "Live host",
+                "CRITICAL: Sensitive paths exposed: ['/.env', '/.git/HEAD']"
+            ],
+            "server": "IFM",
+            "content_length": 184838
+        },
+        {
+            "host": "ifm.ac.tz",
+            "url": "https://ifm.ac.tz/",
+            "status_code": 200,
+            "title": "The Institute of Finance management",
+            "technologies": [],
+            "security_headers": {
+                "Content-Security-Policy": {
+                    "present": true,
+                    "value": "upgrade-insecure-requests"
+                },
+                "X-Frame-Options": {
+                    "present": true,
+                    "value": "SAMEORIGIN"
+                },
+                "X-Content-Type-Options": {
+                    "present": false,
+                    "value": null
+                },
+                "Strict-Transport-Security": {
+                    "present": true,
+                    "value": "max-age=31536000"
+                },
+                "X-XSS-Protection": {
+                    "present": true,
+                    "value": "1; mode=block"
+                },
+                "Referrer-Policy": {
+                    "present": true,
+                    "value": "same-origin"
+                },
+                "Permissions-Policy": {
+                    "present": true,
+                    "value": "geolocation=self"
+                }
+            },
+            "interesting_paths": [
+                {
+                    "path": "/login",
+                    "url": "https://ifm.ac.tz/login",
+                    "status_code": 200,
+                    "size": 101913,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/dashboard",
+                    "url": "https://ifm.ac.tz/dashboard",
+                    "status_code": 302,
+                    "size": 338,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/robots.txt",
+                    "url": "https://ifm.ac.tz/robots.txt",
+                    "status_code": 200,
+                    "size": 24,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/.env",
+                    "url": "https://ifm.ac.tz/.env",
+                    "status_code": 403,
+                    "size": 256,
+                    "severity": "CRITICAL"
+                },
+                {
+                    "path": "/.git/HEAD",
+                    "url": "https://ifm.ac.tz/.git/HEAD",
+                    "status_code": 403,
+                    "size": 256,
+                    "severity": "CRITICAL"
+                },
+                {
+                    "path": "/server-status",
+                    "url": "https://ifm.ac.tz/server-status",
+                    "status_code": 403,
+                    "size": 256,
+                    "severity": "INFO"
+                },
+                {
+                    "path": "/elmah.axd",
+                    "url": "https://ifm.ac.tz/elmah.axd",
+                    "status_code": 403,
+                    "size": 256,
+                    "severity": "INFO"
+                }
+            ],
+            "flags": [
+                "Missing security headers: X-Content-Type-Options",
+                "Live host",
+                "CRITICAL: Sensitive paths exposed: ['/.env', '/.git/HEAD']"
+            ],
+            "server": "IFM",
+            "content_length": 184570
+        }
+    ]
+}

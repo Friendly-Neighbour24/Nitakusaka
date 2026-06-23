@@ -15,6 +15,7 @@ from modules import http_module
 from modules import correlator
 from modules import report_module
 from modules import reverse_dns
+from modules import content_module
 from modules import monitor
 
 # Optional modules — import safely
@@ -92,7 +93,7 @@ examples:
     # Module selection
     parser.add_argument(
         "-m", "--module",
-        choices=["dns", "ports", "http", "vuln", "correlate", "report"],
+        choices=["dns", "ports", "http", "vuln","content", "correlate", "report"],
         help="run a single module only",
     )
 
@@ -213,6 +214,10 @@ def run_full_pipeline(args):
         )
     http_results = http_module.run(http_targets, output_dir=args.output)
     results["http"] = http_results
+    # Content discovery
+    print("\n[+] PHASE 3.5/5 — Content Discovery")
+    content_module.run(target, output_dir=args.output)
+
 
     # 5. Vulnerability scanning
     if VULN_AVAILABLE:
@@ -274,6 +279,9 @@ def run_single_module(args):
 
     elif args.module == "http":
         http_module.run(target, output_dir=args.output)
+
+    elif args.module == "content":
+        content_module.run(target, output_dir=args.output)    
 
     elif args.module == "vuln":
         if VULN_AVAILABLE:

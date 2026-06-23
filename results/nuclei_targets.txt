@@ -1,2 +1,2 @@
-http://scanme.nmap.org
-https://scanme.nmap.org
+http://ifm.ac.tz
+https://ifm.ac.tz

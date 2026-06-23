@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nitakusaka Report — {{ report.target }}</title>
+<title>Nitakusaka Report — scanme.nmap.org</title>
 <style>
   :root {
     --bg:        #0A0E1A;
@@ -398,11 +398,11 @@
       <span>Reconnaissance Report</span>
     </div>
     <h1>Nitakusaka</h1>
-    <div class="target mono">{{ report.target }}</div>
+    <div class="target mono">scanme.nmap.org</div>
     <div class="header-meta">
-      <div>Generated <strong>{{ report.generated }}</strong></div>
-      <div>Engine <strong>v{{ report.version }}</strong></div>
-      <div>Findings <strong>{{ report.total_findings }}</strong></div>
+      <div>Generated <strong>2026-06-22 18:26:40</strong></div>
+      <div>Engine <strong>v1.0</strong></div>
+      <div>Findings <strong>11</strong></div>
     </div>
   </div>
 
@@ -413,37 +413,37 @@
       <div class="section-title">Executive Summary</div>
       <div class="severity-grid">
         <div class="sev-card critical">
-          <div class="sev-count">{{ report.severity_counts.CRITICAL }}</div>
+          <div class="sev-count">6</div>
           <div class="sev-label">Critical</div>
         </div>
         <div class="sev-card high">
-          <div class="sev-count">{{ report.severity_counts.HIGH }}</div>
+          <div class="sev-count">1</div>
           <div class="sev-label">High</div>
         </div>
         <div class="sev-card medium">
-          <div class="sev-count">{{ report.severity_counts.MEDIUM }}</div>
+          <div class="sev-count">2</div>
           <div class="sev-label">Medium</div>
         </div>
         <div class="sev-card low">
-          <div class="sev-count">{{ report.severity_counts.LOW }}</div>
+          <div class="sev-count">2</div>
           <div class="sev-label">Low</div>
         </div>
         <div class="sev-card info">
-          <div class="sev-count">{{ report.severity_counts.INFO }}</div>
+          <div class="sev-count">0</div>
           <div class="sev-label">Info</div>
         </div>
       </div>
       <div class="stats-row">
         <div class="stat-box">
-          <div class="num">{{ report.total_subdomains }}</div>
+          <div class="num">0</div>
           <div class="lbl">Subdomains discovered</div>
         </div>
         <div class="stat-box">
-          <div class="num">{{ report.total_ports }}</div>
+          <div class="num">2</div>
           <div class="lbl">Open ports found</div>
         </div>
         <div class="stat-box">
-          <div class="num">{{ report.technologies | length }}</div>
+          <div class="num">4</div>
           <div class="lbl">Technologies detected</div>
         </div>
       </div>
@@ -452,139 +452,300 @@
     <!-- Findings -->
     <div class="section">
       <div class="section-title">Findings</div>
-      {% if report.findings %}
-        {% for finding in report.findings %}
-        <div class="finding {{ finding.severity | lower }}">
+      
+        
+        <div class="finding critical">
           <div class="finding-head">
-            <span class="sev-badge">{{ finding.severity }}</span>
-            <span class="finding-title">{{ finding.title }}</span>
+            <span class="sev-badge">CRITICAL</span>
+            <span class="finding-title">Environment File Exposed</span>
           </div>
           <div class="finding-body">
-            {% if finding.detail %}
-            <div class="finding-detail">{{ finding.detail }}</div>
-            {% endif %}
-            {% if finding.url %}
-            <div class="finding-field">
-              <span class="key">Location</span>
-              <span class="val">{{ finding.url }}</span>
-            </div>
-            {% endif %}
-            {% if finding.cve %}
-            <div class="finding-field">
-              <span class="key">CVE</span>
-              <span class="val cve">
-                {% if finding.cve is string %}{{ finding.cve }}{% else %}{{ finding.cve | join(', ') }}{% endif %}
-              </span>
-            </div>
-            {% endif %}
-            {% if finding.recommendation %}
+            
+            <div class="finding-detail">/.env file accessible — credentials and API keys likely exposed</div>
+            
+            
+            
+            
             <div class="finding-field">
               <span class="key">Remediation</span>
-              <span class="val fix">{{ finding.recommendation }}</span>
+              <span class="val fix">Immediately restrict access to this path and rotate any exposed credentials.</span>
             </div>
-            {% endif %}
+            
           </div>
         </div>
-        {% endfor %}
-      {% else %}
-        <div class="empty">No findings identified in this scan.</div>
-      {% endif %}
+        
+        <div class="finding critical">
+          <div class="finding-head">
+            <span class="sev-badge">CRITICAL</span>
+            <span class="finding-title">Git Repository Exposed</span>
+          </div>
+          <div class="finding-body">
+            
+            <div class="finding-detail">/.git directory accessible — full source code disclosure possible</div>
+            
+            
+            
+            
+            <div class="finding-field">
+              <span class="key">Remediation</span>
+              <span class="val fix">Immediately restrict access to this path and rotate any exposed credentials.</span>
+            </div>
+            
+          </div>
+        </div>
+        
+        <div class="finding critical">
+          <div class="finding-head">
+            <span class="sev-badge">CRITICAL</span>
+            <span class="finding-title">Environment File Exposed</span>
+          </div>
+          <div class="finding-body">
+            
+            <div class="finding-detail">/.env file accessible — credentials and API keys likely exposed</div>
+            
+            
+            
+            
+            <div class="finding-field">
+              <span class="key">Remediation</span>
+              <span class="val fix">Immediately restrict access to this path and rotate any exposed credentials.</span>
+            </div>
+            
+          </div>
+        </div>
+        
+        <div class="finding critical">
+          <div class="finding-head">
+            <span class="sev-badge">CRITICAL</span>
+            <span class="finding-title">Git Repository Exposed</span>
+          </div>
+          <div class="finding-body">
+            
+            <div class="finding-detail">/.git directory accessible — full source code disclosure possible</div>
+            
+            
+            
+            
+            <div class="finding-field">
+              <span class="key">Remediation</span>
+              <span class="val fix">Immediately restrict access to this path and rotate any exposed credentials.</span>
+            </div>
+            
+          </div>
+        </div>
+        
+        <div class="finding critical">
+          <div class="finding-head">
+            <span class="sev-badge">CRITICAL</span>
+            <span class="finding-title">Environment File Exposed</span>
+          </div>
+          <div class="finding-body">
+            
+            <div class="finding-detail">/.env file accessible — credentials and API keys likely exposed</div>
+            
+            
+            
+            
+            <div class="finding-field">
+              <span class="key">Remediation</span>
+              <span class="val fix">Immediately restrict access to this path and rotate any exposed credentials.</span>
+            </div>
+            
+          </div>
+        </div>
+        
+        <div class="finding critical">
+          <div class="finding-head">
+            <span class="sev-badge">CRITICAL</span>
+            <span class="finding-title">Git Repository Exposed</span>
+          </div>
+          <div class="finding-body">
+            
+            <div class="finding-detail">/.git directory accessible — full source code disclosure possible</div>
+            
+            
+            
+            
+            <div class="finding-field">
+              <span class="key">Remediation</span>
+              <span class="val fix">Immediately restrict access to this path and rotate any exposed credentials.</span>
+            </div>
+            
+          </div>
+        </div>
+        
+        <div class="finding high">
+          <div class="finding-head">
+            <span class="sev-badge">HIGH</span>
+            <span class="finding-title">Sensitive Subdomain Exposed: admin.ifm.ac.tz</span>
+          </div>
+          <div class="finding-body">
+            
+            <div class="finding-detail">Subdomain matching pattern 'admin' is publicly accessible</div>
+            
+            
+            
+            
+            <div class="finding-field">
+              <span class="key">Remediation</span>
+              <span class="val fix">Verify this subdomain should be publicly accessible. Consider moving to internal DNS if not needed publicly.</span>
+            </div>
+            
+          </div>
+        </div>
+        
+        <div class="finding medium">
+          <div class="finding-head">
+            <span class="sev-badge">MEDIUM</span>
+            <span class="finding-title">Missing Security Headers on https://library.ifm.ac.tz/</span>
+          </div>
+          <div class="finding-body">
+            
+            <div class="finding-detail">7 security headers not configured</div>
+            
+            
+            
+            
+            <div class="finding-field">
+              <span class="key">Remediation</span>
+              <span class="val fix">Implement missing security headers in the web server configuration.</span>
+            </div>
+            
+          </div>
+        </div>
+        
+        <div class="finding medium">
+          <div class="finding-head">
+            <span class="sev-badge">MEDIUM</span>
+            <span class="finding-title">Missing Security Headers on https://mail.ifm.ac.tz/</span>
+          </div>
+          <div class="finding-body">
+            
+            <div class="finding-detail">4 security headers not configured</div>
+            
+            
+            
+            
+            <div class="finding-field">
+              <span class="key">Remediation</span>
+              <span class="val fix">Implement missing security headers in the web server configuration.</span>
+            </div>
+            
+          </div>
+        </div>
+        
+        <div class="finding low">
+          <div class="finding-head">
+            <span class="sev-badge">LOW</span>
+            <span class="finding-title">Missing Security Headers on https://www.ifm.ac.tz/</span>
+          </div>
+          <div class="finding-body">
+            
+            <div class="finding-detail">1 security headers not configured</div>
+            
+            
+            
+            
+            <div class="finding-field">
+              <span class="key">Remediation</span>
+              <span class="val fix">Implement missing security headers in the web server configuration.</span>
+            </div>
+            
+          </div>
+        </div>
+        
+        <div class="finding low">
+          <div class="finding-head">
+            <span class="sev-badge">LOW</span>
+            <span class="finding-title">Missing Security Headers on https://ifm.ac.tz/</span>
+          </div>
+          <div class="finding-body">
+            
+            <div class="finding-detail">1 security headers not configured</div>
+            
+            
+            
+            
+            <div class="finding-field">
+              <span class="key">Remediation</span>
+              <span class="val fix">Implement missing security headers in the web server configuration.</span>
+            </div>
+            
+          </div>
+        </div>
+        
+      
     </div>
 
     <!-- Subdomains -->
     <div class="section">
       <div class="section-title">Discovered Subdomains</div>
-      {% if report.subdomains %}
-      <table>
-        <thead>
-          <tr><th>Subdomain</th><th>IP Addresses</th><th>Source</th></tr>
-        </thead>
-        <tbody>
-          {% for sub in report.subdomains %}
-          <tr>
-            <td class="mono">{{ sub.subdomain }}</td>
-            <td class="mono">{{ sub.ips or '—' }}</td>
-            <td>{{ sub.status }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      {% else %}
+      
         <div class="empty">No subdomains discovered.</div>
-      {% endif %}
+      
     </div>
 
     <!-- Open Ports -->
     <div class="section">
       <div class="section-title">Open Ports &amp; Services</div>
-      {% if report.open_ports %}
+      
       <table>
         <thead>
           <tr><th>Port</th><th>Service</th><th>Risk Assessment</th></tr>
         </thead>
         <tbody>
-          {% for port in report.open_ports %}
+          
           <tr>
-            <td class="mono">{{ port.port }}</td>
-            <td>{{ port.service }}</td>
-            <td>{% if port.risk %}<span class="risk-flag">⚠ {{ port.risk }}</span>{% else %}—{% endif %}</td>
+            <td class="mono">22</td>
+            <td>SSH</td>
+            <td>—</td>
           </tr>
-          {% endfor %}
+          
+          <tr>
+            <td class="mono">80</td>
+            <td>HTTP</td>
+            <td>—</td>
+          </tr>
+          
         </tbody>
       </table>
-      {% else %}
-        <div class="empty">No open ports found.</div>
-      {% endif %}
+      
     </div>
 
     <!-- Technologies -->
     <!-- Reverse DNS / Infrastructure -->
-    {% if report.reverse_hosts %}
+    
     <div class="section">
       <div class="section-title">Reverse DNS &amp; Infrastructure</div>
       <table>
         <thead><tr><th>IP Address</th><th>Hostname</th><th>Root Domain</th></tr></thead>
         <tbody>
-          {% for host in report.reverse_hosts %}
+          
           <tr>
-            <td class="mono">{{ host.ip }}</td>
-            <td class="mono">{{ host.hostname }}</td>
-            <td>{{ host.root }}</td>
+            <td class="mono">45.33.32.156</td>
+            <td class="mono">scanme.nmap.org</td>
+            <td>nmap.org</td>
           </tr>
-          {% endfor %}
+          
         </tbody>
       </table>
     </div>
-    {% endif %}
-  <!-- Content Discovery -->
-    {% if report.content_paths %}
-    <div class="section">
-      <div class="section-title">Content Discovery</div>
-      <table>
-        <thead><tr><th>Status</th><th>Path</th><th>Severity</th></tr></thead>
-        <tbody>
-          {% for item in report.content_paths %}
-          <tr>
-            <td class="mono">{{ item.status_code }}</td>
-            <td class="mono">{{ item.url }}</td>
-            <td>{% if item.severity %}<span class="risk-flag">{{ item.severity }}</span>{% else %}—{% endif %}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-    {% endif %}  
+    
     <div class="section">
       <div class="section-title">Detected Technologies</div>
-      {% if report.technologies %}
+      
       <div class="chips">
-        {% for tech in report.technologies %}
-        <span class="chip">{{ tech }}</span>
-        {% endfor %}
+        
+        <span class="chip">Apache</span>
+        
+        <span class="chip">Bootstrap</span>
+        
+        <span class="chip">PHP</span>
+        
+        <span class="chip">jQuery</span>
+        
       </div>
-      {% else %}
-        <div class="empty">No technologies fingerprinted.</div>
-      {% endif %}
+      
     </div>
 
   </div>

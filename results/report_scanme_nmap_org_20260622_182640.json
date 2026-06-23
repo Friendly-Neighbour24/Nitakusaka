@@ -1,0 +1,182 @@
+{
+    "target": "scanme.nmap.org",
+    "generated": "2026-06-22 18:26:40",
+    "tool": "Nitakusaka",
+    "version": "1.0",
+    "findings": [
+        {
+            "severity": "CRITICAL",
+            "title": "Environment File Exposed",
+            "detail": "/.env file accessible \u2014 credentials and API keys likely exposed",
+            "evidence": {
+                "url": "https://mail.ifm.ac.tz/",
+                "path": "/.env",
+                "status_code": 403
+            },
+            "recommendation": "Immediately restrict access to this path and rotate any exposed credentials."
+        },
+        {
+            "severity": "CRITICAL",
+            "title": "Git Repository Exposed",
+            "detail": "/.git directory accessible \u2014 full source code disclosure possible",
+            "evidence": {
+                "url": "https://mail.ifm.ac.tz/",
+                "path": "/.git/HEAD",
+                "status_code": 403
+            },
+            "recommendation": "Immediately restrict access to this path and rotate any exposed credentials."
+        },
+        {
+            "severity": "CRITICAL",
+            "title": "Environment File Exposed",
+            "detail": "/.env file accessible \u2014 credentials and API keys likely exposed",
+            "evidence": {
+                "url": "https://www.ifm.ac.tz/",
+                "path": "/.env",
+                "status_code": 403
+            },
+            "recommendation": "Immediately restrict access to this path and rotate any exposed credentials."
+        },
+        {
+            "severity": "CRITICAL",
+            "title": "Git Repository Exposed",
+            "detail": "/.git directory accessible \u2014 full source code disclosure possible",
+            "evidence": {
+                "url": "https://www.ifm.ac.tz/",
+                "path": "/.git/HEAD",
+                "status_code": 403
+            },
+            "recommendation": "Immediately restrict access to this path and rotate any exposed credentials."
+        },
+        {
+            "severity": "CRITICAL",
+            "title": "Environment File Exposed",
+            "detail": "/.env file accessible \u2014 credentials and API keys likely exposed",
+            "evidence": {
+                "url": "https://ifm.ac.tz/",
+                "path": "/.env",
+                "status_code": 403
+            },
+            "recommendation": "Immediately restrict access to this path and rotate any exposed credentials."
+        },
+        {
+            "severity": "CRITICAL",
+            "title": "Git Repository Exposed",
+            "detail": "/.git directory accessible \u2014 full source code disclosure possible",
+            "evidence": {
+                "url": "https://ifm.ac.tz/",
+                "path": "/.git/HEAD",
+                "status_code": 403
+            },
+            "recommendation": "Immediately restrict access to this path and rotate any exposed credentials."
+        },
+        {
+            "severity": "HIGH",
+            "title": "Sensitive Subdomain Exposed: admin.ifm.ac.tz",
+            "detail": "Subdomain matching pattern 'admin' is publicly accessible",
+            "evidence": {
+                "subdomain": "admin.ifm.ac.tz",
+                "ips": [
+                    "196.192.79.167"
+                ],
+                "pattern": "admin"
+            },
+            "recommendation": "Verify this subdomain should be publicly accessible. Consider moving to internal DNS if not needed publicly."
+        },
+        {
+            "severity": "MEDIUM",
+            "title": "Missing Security Headers on https://library.ifm.ac.tz/",
+            "detail": "7 security headers not configured",
+            "evidence": {
+                "url": "https://library.ifm.ac.tz/",
+                "missing_headers": [
+                    "Content-Security-Policy",
+                    "X-Frame-Options",
+                    "X-Content-Type-Options",
+                    "Strict-Transport-Security",
+                    "X-XSS-Protection",
+                    "Referrer-Policy",
+                    "Permissions-Policy"
+                ]
+            },
+            "recommendation": "Implement missing security headers in the web server configuration."
+        },
+        {
+            "severity": "MEDIUM",
+            "title": "Missing Security Headers on https://mail.ifm.ac.tz/",
+            "detail": "4 security headers not configured",
+            "evidence": {
+                "url": "https://mail.ifm.ac.tz/",
+                "missing_headers": [
+                    "Content-Security-Policy",
+                    "Strict-Transport-Security",
+                    "Referrer-Policy",
+                    "Permissions-Policy"
+                ]
+            },
+            "recommendation": "Implement missing security headers in the web server configuration."
+        },
+        {
+            "severity": "LOW",
+            "title": "Missing Security Headers on https://www.ifm.ac.tz/",
+            "detail": "1 security headers not configured",
+            "evidence": {
+                "url": "https://www.ifm.ac.tz/",
+                "missing_headers": [
+                    "X-Content-Type-Options"
+                ]
+            },
+            "recommendation": "Implement missing security headers in the web server configuration."
+        },
+        {
+            "severity": "LOW",
+            "title": "Missing Security Headers on https://ifm.ac.tz/",
+            "detail": "1 security headers not configured",
+            "evidence": {
+                "url": "https://ifm.ac.tz/",
+                "missing_headers": [
+                    "X-Content-Type-Options"
+                ]
+            },
+            "recommendation": "Implement missing security headers in the web server configuration."
+        }
+    ],
+    "subdomains": [],
+    "open_ports": [
+        {
+            "port": 22,
+            "service": "SSH",
+            "banner": "",
+            "risk": ""
+        },
+        {
+            "port": 80,
+            "service": "HTTP",
+            "banner": "HTTP/1.1 200 OK\r\nDate: Thu, 11 Jun 2026 20:03:04 GMT\r\nServer: Apache/2.4.7 (Ubuntu)\r\nAccept-Ranges: ",
+            "risk": ""
+        }
+    ],
+    "technologies": [
+        "Apache",
+        "Bootstrap",
+        "PHP",
+        "jQuery"
+    ],
+    "reverse_hosts": [
+        {
+            "ip": "45.33.32.156",
+            "hostname": "scanme.nmap.org",
+            "root": "nmap.org"
+        }
+    ],
+    "severity_counts": {
+        "CRITICAL": 6,
+        "HIGH": 1,
+        "MEDIUM": 2,
+        "LOW": 2,
+        "INFO": 0
+    },
+    "total_findings": 11,
+    "total_subdomains": 0,
+    "total_ports": 2
+}

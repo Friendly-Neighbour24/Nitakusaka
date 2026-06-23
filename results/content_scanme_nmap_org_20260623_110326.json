@@ -1,0 +1,78 @@
+{
+    "target": "http://scanme.nmap.org",
+    "timestamp": "2026-06-23T11:03:26.789355",
+    "scanner": "ffuf",
+    "discovered": [
+        {
+            "url": "http://scanme.nmap.org/index",
+            "path": "index",
+            "status_code": 200,
+            "size": 6974,
+            "severity": null
+        },
+        {
+            "url": "http://scanme.nmap.org/index.html",
+            "path": "index.html",
+            "status_code": 200,
+            "size": 6974,
+            "severity": null
+        },
+        {
+            "url": "http://scanme.nmap.org/.svn",
+            "path": ".svn",
+            "status_code": 301,
+            "size": 316,
+            "severity": null
+        },
+        {
+            "url": "http://scanme.nmap.org/images",
+            "path": "images",
+            "status_code": 301,
+            "size": 318,
+            "severity": null
+        },
+        {
+            "url": "http://scanme.nmap.org/shared",
+            "path": "shared",
+            "status_code": 301,
+            "size": 318,
+            "severity": null
+        },
+        {
+            "url": "http://scanme.nmap.org/.hta",
+            "path": ".hta",
+            "status_code": 403,
+            "size": 286,
+            "severity": null
+        },
+        {
+            "url": "http://scanme.nmap.org/.htaccess",
+            "path": ".htaccess",
+            "status_code": 403,
+            "size": 291,
+            "severity": null
+        },
+        {
+            "url": "http://scanme.nmap.org/.htpasswd",
+            "path": ".htpasswd",
+            "status_code": 403,
+            "size": 291,
+            "severity": null
+        },
+        {
+            "url": "http://scanme.nmap.org/.svn/entries",
+            "path": ".svn/entries",
+            "status_code": 403,
+            "size": 294,
+            "severity": null
+        },
+        {
+            "url": "http://scanme.nmap.org/favicon.ico",
+            "path": "favicon.ico",
+            "status_code": 403,
+            "size": 293,
+            "severity": null
+        }
+    ],
+    "total": 10
+}
